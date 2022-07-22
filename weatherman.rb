@@ -66,7 +66,7 @@ if File.file?(file_path)
     puts line
 
     temp_values = line.split(',')
-    temp_values.map {|val| val.strip}
+    temp_values.map(&:strip)
 
     parsed_data = parsed_data.keys.zip(temp_values).to_h
     parsed_data.each do |cat, data|
@@ -78,7 +78,7 @@ else
 end
 
 # Task 1
-def task_1(partial_file_path, months)
+def task1(partial_file_path, months)
   max_temp = { 'Max TemperatureC' => '',
                'Date' => '' }
   min_temp = { 'Min TemperatureC' => '',
@@ -86,15 +86,15 @@ def task_1(partial_file_path, months)
   max_humidity = { 'Max Humidity' => '',
                    'Date' => '' }
 
-  for i in 1..12
-    file_path = partial_file_path + months[i.to_s] + '.txt'
+  (1..12).each do |i|
+    file_path = "#{partial_file_path}#{months[i.to_s]}.txt"
     if File.file?(file_path)
       file_data = File.readlines(file_path, chomp: true)
 
       parsed_data = {}
       temp_categories = file_data[0].split(',')
       temp_categories.unshift
-      parsed_data["Date"] = nil
+      parsed_data['Date'] = nil
       temp_categories.each do |categories|
         parsed_data[categories.strip] = nil
       end
@@ -104,7 +104,7 @@ def task_1(partial_file_path, months)
         puts line
 
         temp_values = line.split(',')
-        temp_values.map {|val| val.strip}
+        temp_values.map(&:strip)
 
         parsed_data = parsed_data.keys.zip(temp_values).to_h
         parsed_data.each do |cat, data|
@@ -145,4 +145,4 @@ def task_1(partial_file_path, months)
   puts ''
 end
 
-task_1(file_path, months)
+task1(file_path, months)
