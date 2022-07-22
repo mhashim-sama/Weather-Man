@@ -51,32 +51,55 @@ full_filename = filename.join('_')
 
 file_path = "#{task['path']}#{full_filename}.txt"
 
-# Reading data from file
-if File.file?(file_path)
-  file_data = File.readlines(file_path, chomp: true)
+# file_path = "#{task['path']}#{full_filename}"
 
-  parsed_data = {}
-  temp_categories = file_data[0].split(',')
-  temp_categories.shift
-  parsed_data['Date'] = nil
-  temp_categories.each do |categories|
-    parsed_data[categories.strip] = nil
-  end
-  file_data.unshift
+#Task 2
+def task2(file_path, months)
+  # Reading data from file
+  max_temp_list = []
+  min_temp_list = []
+  mean_humidity_list = []
 
-  file_data.each do |line|
-    puts line
+  if File.file?(file_path)
+    file_data = File.readlines(file_path, chomp: true)
 
-    temp_values = line.split(',')
-    temp_values.map(&:strip)
-
-    parsed_data = parsed_data.keys.zip(temp_values).to_h
-    parsed_data.each do |cat, data|
-      puts "#{cat} => #{data}"
+    parsed_data = {}
+    temp_categories = file_data[0].split(',')
+    temp_categories.shift
+    parsed_data['Date'] = nil
+    temp_categories.each do |categories|
+      parsed_data[categories.strip] = nil
     end
+    file_data.unshift
+
+    file_data.each do |line|
+      puts line
+
+      temp_values = line.split(',')
+      temp_values.map(&:strip)
+
+      parsed_data = parsed_data.keys.zip(temp_values).to_h
+      parsed_data.each do |cat, data|
+        puts "#{cat} => #{data}"
+      end
+
+      # calculating average temp
+      max_temp_list.push(parsed_data['Max TemperatureC'].to_i)
+
+      min_temp_list.push(parsed_data['Min TemperatureC'].to_i)
+
+      mean_humidity_list.push(parsed_data['Mean Humidity'].to_i)
+    end
+  else
+    puts "File #{file_path} not found"
   end
-else
-  file_path = "#{task['path']}#{full_filename}"
+  puts ''
+  puts "Max Average Temprature: #{max_temp_list.sum / max_temp_list.size}"
+  puts ''
+  puts "Min Average Temprature: #{min_temp_list.sum / min_temp_list.size}"
+  puts ''
+  puts "Average Humidity: #{mean_humidity_list.sum / mean_humidity_list.size}"
+  puts ''
 end
 
 # Task 1
@@ -147,4 +170,5 @@ def task1(partial_file_path, months)
   puts ''
 end
 
-task1(file_path, months)
+# task1(file_path, months)
+task2(file_path, months)
