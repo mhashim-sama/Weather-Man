@@ -57,6 +57,8 @@ if File.file?(file_path)
 
   parsed_data = {}
   temp_categories = file_data[0].split(',')
+  temp_categories.shift
+  parsed_data['Date'] = nil
   temp_categories.each do |categories|
     parsed_data[categories.strip] = nil
   end
@@ -93,7 +95,7 @@ def task1(partial_file_path, months)
 
       parsed_data = {}
       temp_categories = file_data[0].split(',')
-      temp_categories.unshift
+      temp_categories.shift
       parsed_data['Date'] = nil
       temp_categories.each do |categories|
         parsed_data[categories.strip] = nil
