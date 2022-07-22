@@ -1,3 +1,5 @@
+require 'colorize'
+
 # frozen_string_literal: true
 
 puts 'Starting Weather Man'
@@ -70,7 +72,7 @@ def task2(file_path, months)
     temp_categories.each do |categories|
       parsed_data[categories.strip] = nil
     end
-    file_data.unshift
+    file_data.shift
 
     file_data.each do |line|
       puts line
@@ -102,11 +104,65 @@ def task2(file_path, months)
   puts ''
 end
 
+# Task 3
+def task3(file_path, months)
+  if File.file?(file_path)
+    file_data = File.readlines(file_path, chomp: true)
+
+    parsed_data = {}
+    temp_categories = file_data[0].split(',')
+    temp_categories.shift
+    parsed_data['Date'] = nil
+    temp_categories.each do |categories|
+      parsed_data[categories.strip] = nil
+    end
+    file_data.shift
+
+    file_data.each do |line|
+      puts line
+
+      temp_values = line.split(',')
+      temp_values.map(&:strip)
+
+      parsed_data = parsed_data.keys.zip(temp_values).to_h
+      parsed_data.each do |cat, data|
+        puts "#{cat} => #{data}"
+      end
+
+      # generating output
+      puts "#{parsed_data['Date']} Highest Temprature:"
+      color_output(parsed_data['Max TemperatureC'].to_i, '+')
+
+      puts "#{parsed_data['Date']} Lowest Temprature:"
+      color_output(parsed_data['Min TemperatureC'].to_i, '-')
+
+    end
+  else
+    puts "File #{file_path} not found"
+  end
+  puts ''
+  puts "Max Average Temprature: #{max_temp_list.sum / max_temp_list.size}"
+  puts ''
+  puts "Min Average Temprature: #{min_temp_list.sum / min_temp_list.size}"
+  puts ''
+  puts "Average Humidity: #{mean_humidity_list.sum / mean_humidity_list.size}"
+  puts ''
+end
+
+def color_output(value, symbol)
+  output = ''
+  until value >= 0 do
+    output << symbol
+    value -= 1
+  end
+  puts output
+end
+
 # Task 1
 def task1(partial_file_path, months)
   max_temp = { 'Max TemperatureC' => '',
                'Date' => '' }
-  min_temp = { 'Min TemperatureC' => '',
+  min_temp = { 'Min TemperatureC' => '100',
                'Date' => '' }
   max_humidity = { 'Max Humidity' => '',
                    'Date' => '' }
@@ -123,7 +179,7 @@ def task1(partial_file_path, months)
       temp_categories.each do |categories|
         parsed_data[categories.strip] = nil
       end
-      file_data.unshift
+      file_data.shift
 
       file_data.each do |line|
         puts line
@@ -143,7 +199,7 @@ def task1(partial_file_path, months)
         end
 
         # Finding max temp
-        if min_temp['Min TemperatureC'].to_i > parsed_data['Min TemperatureC'].to_i
+        if (min_temp['Min TemperatureC'].to_i > parsed_data['Min TemperatureC'].to_i) && (parsed_data['Min TemperatureC'] != '')
           min_temp['Min TemperatureC'] = parsed_data['Min TemperatureC']
           min_temp['Date'] = parsed_data['Date']
         end
@@ -170,5 +226,6 @@ def task1(partial_file_path, months)
   puts ''
 end
 
-# task1(file_path, months)
-task2(file_path, months)
+#  task1(file_path, months)
+# task2(file_path, months)
+ task3(file_path, months)
