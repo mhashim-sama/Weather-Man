@@ -13,8 +13,6 @@ AllCops:
     - 'node_modules/**/*'
     - 'vendor/bundle/**/*'
     - 'bin/**/*'
-
-AllCops:
   NewCops: enable
 
 Layout/LineLength:
