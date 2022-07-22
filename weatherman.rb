@@ -19,6 +19,7 @@ months = { '0' => '',
            '12' => 'Dec' }
 task = {}
 
+# Parsing input
 counter = 1
 ARGV.each do |arg|
   puts arg
@@ -40,9 +41,10 @@ ARGV.each do |arg|
   puts counter
 end
 
+# Extracting file path
 filename = []
 filename.push(task['path'].split('/')[-1])
-filename.push(year = task['year'])
+filename.push(task['year'])
 filename.push(months[task['month']])
 
 full_filename = filename.join('_')
@@ -50,3 +52,10 @@ full_filename = filename.join('_')
 file_path = task['path'] + full_filename + '.txt'
 
 puts file_path
+
+# Reading data from file
+file_data = IO.readlines(file_path)
+
+file_data.each do |line|
+  puts line
+end
