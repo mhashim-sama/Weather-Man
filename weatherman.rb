@@ -2,7 +2,10 @@
 
 puts 'Starting Weather Man'
 
-months = { '1' => 'Jan',
+# filepath = /Users/dev/Documents/Resources/Project-Based/weatherman-resources/Dubai_weather/Dubai_weather_2004_Aug.txt
+
+months = { '0' => '',
+           '1' => 'Jan',
            '2' => 'Feb',
            '3' => 'Mar',
            '4' => 'Apr',
@@ -23,7 +26,13 @@ ARGV.each do |arg|
   when 1
     task['option'] = arg
   when 2
-    task['date'] = arg
+    temp = arg.split('/')
+    task['year'] = temp[0]
+    if temp.length == 2
+      task['month'] = temp[1]
+    else
+      task['month'] = '0'
+    end
   when 3
     task['path'] = arg
   end
@@ -31,5 +40,13 @@ ARGV.each do |arg|
   puts counter
 end
 
-puts task
-puts months
+filename = []
+filename.push(task['path'].split('/')[-1])
+filename.push(year = task['year'])
+filename.push(months[task['month']])
+
+full_filename = filename.join('_')
+
+file_path = task['path'] + full_filename + '.txt'
+
+puts file_path
