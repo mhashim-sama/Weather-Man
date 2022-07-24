@@ -56,7 +56,7 @@ file_path = "#{task['path']}#{full_filename}.txt"
 # file_path = "#{task['path']}#{full_filename}"
 
 #Task 2
-def task2(file_path, months)
+def task2(file_path)
   # Reading data from file
   max_temp_list = []
   min_temp_list = []
@@ -105,7 +105,7 @@ def task2(file_path, months)
 end
 
 # Task 3
-def task3(file_path, months)
+def task3(file_path)
   if File.file?(file_path)
     file_data = File.readlines(file_path, chomp: true)
 
@@ -140,18 +140,11 @@ def task3(file_path, months)
   else
     puts "File #{file_path} not found"
   end
-  puts ''
-  puts "Max Average Temprature: #{max_temp_list.sum / max_temp_list.size}"
-  puts ''
-  puts "Min Average Temprature: #{min_temp_list.sum / min_temp_list.size}"
-  puts ''
-  puts "Average Humidity: #{mean_humidity_list.sum / mean_humidity_list.size}"
-  puts ''
 end
 
 def color_output(value, symbol)
   output = ''
-  until value >= 0 do
+  while value >= 0 do
     output << symbol
     value -= 1
   end
@@ -227,5 +220,5 @@ def task1(partial_file_path, months)
 end
 
 #  task1(file_path, months)
-# task2(file_path, months)
- task3(file_path, months)
+# task2(file_path)
+ task3(file_path)
