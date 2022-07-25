@@ -1,5 +1,3 @@
-require 'colorize'
-
 # frozen_string_literal: true
 
 puts 'Starting Weather Man'
