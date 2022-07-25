@@ -219,6 +219,6 @@ def task1(partial_file_path, months)
   puts ''
 end
 
-#  task1(file_path, months)
-# task2(file_path)
+ #task1(file_path, months)
+ #task2(file_path)
  task3(file_path)
