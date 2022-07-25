@@ -14,8 +14,8 @@ module Util
           task = 'task2'
         when '-c'
           task = 'task3'
-        else
-          puts exception
+        when '-e'
+          return 'task1'
         end
       when 1
         year = input_args[i].split('/')[0]
@@ -38,6 +38,21 @@ module Util
     full_filename = filename.join('_')
 
     "#{path}#{full_filename}.txt"
+  end
+
+  def generate_multiple_file_path(path, year)
+    filename = []
+    multiple_file_path = []
+    filename.push(path.split('/')[-1])
+    filename.push(year)
+    (1..12).each do |month|
+      full_filename = []
+      full_filename.push(filename)
+      full_filename.push(Date::ABBR_MONTHNAMES[month])
+      full_filename = full_filename.join('_')
+      multiple_file_path.push("#{path}#{full_filename}.txt")
+    end
+    multiple_file_path
   end
 
   def read_file(file_path)
