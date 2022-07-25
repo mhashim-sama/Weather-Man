@@ -6,9 +6,7 @@ module WeatherMan
 
   def runner
     task = Util.input_checks(ARGV)
-    if task == 'task1'
-      task1(ARGV[2], ARGV[1])
-    end
+    task1(ARGV[2], ARGV[1]) if task == 'task1'
     file = Util.generate_file_path(ARGV[2], ARGV[1])
     file_data = Util.read_file(file)
     case task
